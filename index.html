@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudeera Hemantha | Software Engineer & DevOps Portfolio</title>
+    <meta name="description" content="Portfolio of Sudeera Hemantha - Software Engineering Undergraduate at LNBTI Maharagama. Featuring 10 enterprise projects across DevOps, AI & Data, Full-Stack, and Databases.">
+    <meta name="author" content="Sudeera Hemantha">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#06b6d4',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                        },
+                        darkbg: '#0b0f19',
+                        cardbg: '#111827',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            color: #f3f4f6;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+        }
+        .glass-card {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.25);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-border {
+            border-image: linear-gradient(to right, #38bdf8, #818cf8) 1;
+        }
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.625rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            line-height: 1;
+            margin-right: 0.35rem;
+            margin-bottom: 0.35rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-cyan-500 selection:text-white">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-card border-b border-gray-800 bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+                    SH
+                </div>
+                <div>
+                    <span class="text-lg font-bold tracking-tight text-white group-hover:text-cyan-400 transition-colors">Sudeera Hemantha</span>
+                    <span class="block text-xs text-cyan-400 font-medium">LNBTI Maharagama</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+                <a href="#about" class="hover:text-cyan-400 transition-colors">About</a>
+                <a href="#pillars" class="hover:text-cyan-400 transition-colors">Engineering Pillars</a>
+                <a href="#projects" class="hover:text-cyan-400 transition-colors">10 Enterprise Projects</a>
+                <a href="#deployment" class="hover:text-cyan-400 transition-colors">Deployment Guide</a>
+            </nav>
+
+            <!-- Quick Action Button -->
+            <div class="flex items-center space-x-4">
+                <a href="https://github.com/SudeeraHemantha" target="_blank" rel="noopener noreferrer" 
+                   class="inline-flex items-center space-x-2 px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 text-sm font-medium transition-all hover:border-gray-500">
+                    <i class="fab fa-github text-base"></i>
+                    <span class="hidden sm:inline">GitHub Profile</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        
+        <!-- Hero Section -->
+        <section id="about" class="relative py-20 lg:py-28 overflow-hidden">
+            <!-- Subtle background glows -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute top-1/3 right-10 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Hero Info -->
+                    <div class="lg:col-span-8 space-y-6">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-800/50 text-cyan-300 text-xs font-semibold tracking-wide">
+                            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                            <span>LNBTI Maharagama • Software Engineering Undergraduate</span>
+                        </div>
+
+                        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-none text-white">
+                            Building Enterprise Solutions with <span class="gradient-text">DevOps, AI & Modern Web</span>
+                        </h1>
+
+                        <p class="text-lg sm:text-xl text-gray-300 max-w-3xl leading-relaxed font-normal">
+                            I am <strong class="text-white">Sudeera Hemantha</strong>, a Software Engineering student at <strong class="text-white">LNBTI Maharagama (Lanka Nippon BizTech Institute)</strong>. I specialize in designing end-to-end distributed systems, containerized cloud infrastructure, AI-powered automation, and robust database architectures.
+                        </p>
+
+                        <!-- Key Pillar Badges -->
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            <span class="px-3 py-1 bg-blue-900/40 text-blue-300 border border-blue-700/50 rounded-lg text-xs font-medium"><i class="fas fa-server mr-1.5"></i> DevOps & Cloud Infrastructure</span>
+                            <span class="px-3 py-1 bg-purple-900/40 text-purple-300 border border-purple-700/50 rounded-lg text-xs font-medium"><i class="fas fa-brain mr-1.5"></i> AI, ML & NLP Engineering</span>
+                            <span class="px-3 py-1 bg-emerald-900/40 text-emerald-300 border border-emerald-700/50 rounded-lg text-xs font-medium"><i class="fas fa-laptop-code mr-1.5"></i> Full-Stack Web Applications</span>
+                            <span class="px-3 py-1 bg-amber-900/40 text-amber-300 border border-amber-700/50 rounded-lg text-xs font-medium"><i class="fas fa-database mr-1.5"></i> Relational & Vector Databases</span>
+                        </div>
+
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-wrap gap-4 pt-4">
+                            <a href="#projects" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold text-sm shadow-lg shadow-cyan-500/25 transition-all transform hover:-translate-y-0.5">
+                                <i class="fas fa-th-large mr-2"></i> Explore 10 Enterprise Projects
+                            </a>
+                            <a href="https://github.com/SudeeraHemantha" target="_blank" rel="noopener noreferrer" class="px-6 py-3.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 font-semibold text-sm transition-all hover:border-gray-500">
+                                <i class="fab fa-github mr-2"></i> Visit GitHub Profile
+                            </a>
+                            <a href="#deployment" class="px-6 py-3.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-cyan-400 border border-cyan-800/60 font-semibold text-sm transition-all">
+                                <i class="fas fa-cloud-upload-alt mr-2"></i> Deployment Guide
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Hero Stats Card -->
+                    <div class="lg:col-span-4">
+                        <div class="glass-card p-6 sm:p-8 rounded-2xl space-y-6 relative">
+                            <div class="border-b border-gray-800 pb-4">
+                                <h3 class="text-xl font-bold text-white flex items-center">
+                                    <i class="fas fa-award text-cyan-400 mr-2"></i> Portfolio Highlights
+                                </h3>
+                                <p class="text-xs text-gray-400 mt-1">Enterprise Software & DevOps Architecture</p>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-4 rounded-xl bg-gray-900/80 border border-gray-800">
+                                    <span class="block text-3xl font-extrabold text-cyan-400">10</span>
+                                    <span class="text-xs text-gray-300 font-medium">Enterprise Projects</span>
+                                </div>
+                                <div class="p-4 rounded-xl bg-gray-900/80 border border-gray-800">
+                                    <span class="block text-3xl font-extrabold text-purple-400">4</span>
+                                    <span class="text-xs text-gray-300 font-medium">Engineering Pillars</span>
+                                </div>
+                                <div class="p-4 rounded-xl bg-gray-900/80 border border-gray-800">
+                                    <span class="block text-3xl font-extrabold text-emerald-400">100%</span>
+                                    <span class="text-xs text-gray-300 font-medium">Production Ready</span>
+                                </div>
+                                <div class="p-4 rounded-xl bg-gray-900/80 border border-gray-800">
+                                    <span class="block text-3xl font-extrabold text-amber-400">LNBTI</span>
+                                    <span class="text-xs text-gray-300 font-medium">Maharagama</span>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 border-t border-gray-800/80 text-xs text-gray-400 flex items-center justify-between">
+                                <span><i class="fas fa-location-dot text-red-400 mr-1"></i> Maharagama, Sri Lanka</span>
+                                <span class="text-emerald-400 font-medium"><i class="fas fa-check-circle mr-1"></i> Ready to Deploy</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Engineering Pillars Section -->
+        <section id="pillars" class="py-16 bg-gray-950/60 border-y border-gray-800/60">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white">4 Core Engineering Pillars</h2>
+                    <p class="text-gray-400 mt-3 text-base">Comprehensive skill mastery across modern backend, frontend, cloud automation, and artificial intelligence.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Pillar 1: Infrastructure -->
+                    <div class="glass-card p-6 rounded-2xl flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-4 text-xl">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">DevOps & Infrastructure</h3>
+                            <p class="text-sm text-gray-400 mt-2 leading-relaxed">Infrastructure as Code (IaC), container orchestration, multi-environment staging, and automated monitoring.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-gray-800 text-xs text-gray-300 font-mono space-y-1">
+                            <div>• Docker & Docker Compose</div>
+                            <div>• Kubernetes & Helm Charts</div>
+                            <div>• Terraform & Nginx Reverse Proxy</div>
+                            <div>• Prometheus & Grafana Dashboards</div>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 2: AI & Data -->
+                    <div class="glass-card p-6 rounded-2xl flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-4 text-xl">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">AI & Data Engineering</h3>
+                            <p class="text-sm text-gray-400 mt-2 leading-relaxed">Retrieval-Augmented Generation (RAG), computer vision, vector embeddings, and speech automation.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-gray-800 text-xs text-gray-300 font-mono space-y-1">
+                            <div>• LangChain & OpenAI API</div>
+                            <div>• OpenCV & Face Recognition</div>
+                            <div>• Vector Databases (pgvector)</div>
+                            <div>• NLTK NLP & Speech Synthesis</div>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 3: Full-Stack Apps -->
+                    <div class="glass-card p-6 rounded-2xl flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-4 text-xl">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Full-Stack Web Apps</h3>
+                            <p class="text-sm text-gray-400 mt-2 leading-relaxed">High-performance reactive frontends connected to decoupled API gateways and real-time sockets.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-gray-800 text-xs text-gray-300 font-mono space-y-1">
+                            <div>• React.js & Vite / TypeScript</div>
+                            <div>• Python FastAPI & Node.js Express</div>
+                            <div>• Real-time WebSockets & POS</div>
+                            <div>• TailwindCSS Modern UI</div>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 4: Database & Systems -->
+                    <div class="glass-card p-6 rounded-2xl flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-4 text-xl">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Database & Systems</h3>
+                            <p class="text-sm text-gray-400 mt-2 leading-relaxed">Relational database normalization, PL/pgSQL stored procedures, indexing, and system automation.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-gray-800 text-xs text-gray-300 font-mono space-y-1">
+                            <div>• PostgreSQL / MySQL Schema Design</div>
+                            <div>• PL/pgSQL Triggers & Views</div>
+                            <div>• Redis Caching & Celery Queue</div>
+                            <div>• System OS Automation & Voice</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Showcase Section -->
+        <section id="projects" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+                    <div>
+                        <span class="text-cyan-400 text-xs font-semibold tracking-wider uppercase">Portfolio Master Suite</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">10 Enterprise Projects</h2>
+                        <p class="text-gray-400 text-sm mt-2">Filter by engineering pillar or search by technology stack.</p>
+                    </div>
+
+                    <!-- Search Input -->
+                    <div class="relative w-full md:w-72">
+                        <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+                        <input type="text" id="projectSearch" placeholder="Search tech, title..." 
+                               class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-gray-900 border border-gray-700 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors">
+                    </div>
+                </div>
+
+                <!-- Pillar Filter Tabs -->
+                <div class="flex flex-wrap gap-2 mb-10 border-b border-gray-800 pb-4">
+                    <button class="filter-btn active px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-cyan-600 text-white shadow-lg shadow-cyan-600/20" data-pillar="all">
+                        All Projects (10)
+                    </button>
+                    <button class="filter-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-gray-800/80 text-gray-300 hover:bg-gray-700 hover:text-white" data-pillar="infrastructure">
+                        <i class="fas fa-server mr-1.5 text-blue-400"></i> Infrastructure (2)
+                    </button>
+                    <button class="filter-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-gray-800/80 text-gray-300 hover:bg-gray-700 hover:text-white" data-pillar="aidata">
+                        <i class="fas fa-brain mr-1.5 text-purple-400"></i> AI & Data (4)
+                    </button>
+                    <button class="filter-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-gray-800/80 text-gray-300 hover:bg-gray-700 hover:text-white" data-pillar="fullstack">
+                        <i class="fas fa-laptop-code mr-1.5 text-emerald-400"></i> Full-Stack Apps (3)
+                    </button>
+                    <button class="filter-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-gray-800/80 text-gray-300 hover:bg-gray-700 hover:text-white" data-pillar="database">
+                        <i class="fas fa-database mr-1.5 text-amber-400"></i> Database & Systems (1)
+                    </button>
+                </div>
+
+                <!-- Projects Grid -->
+                <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- Project 01 -->
+                    <div class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-pillar="infrastructure" data-search="enterprise company infrastructure docker terraform nginx github actions prometheus grafana">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-blue-950 text-blue-300 border border-blue-800/60">
+                                    <i class="fas fa-server mr-1"></i> Infrastructure
+                                </span>
+                                <span class="text-xs font-mono text-gray-500">Project #01</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
+                                01. Enterprise Company Infrastructure
+                            </h3>
+                            <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                                Production-ready automated enterprise cloud & local infrastructure setup featuring IaC (Terraform), container orchestration (Docker), reverse proxying, and monitoring.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="badge-pill bg-gray-800 text-cyan-300 border border-gray-700">Docker</span>
+                                <span class="badge-pill bg-gray-800 text-cyan-300 border border-gray-700">Terraform</span>
+                                <span class="badge-pill bg-gray-800 text-cyan-300 border border-gray-700">Nginx</span>
+                                <span class="badge-pill bg-gray-800 text-cyan-300 border border-gray-700">Prometheus</span>
+                                <span class="badge-pill bg-gray-800 text-cyan-300 border border-gray-700">Grafana</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-gray-800 flex items-center justify-between gap-2">
+                            <button onclick="openModal('01')" class="text-xs font-semibold text-cyan-400 hover:text-cyan-300 flex items-center">
+                                <i class="fas fa-info-circle mr-1.5"></i> Architecture Details
+                            </button>
+                            <a href="https://github.com/SudeeraHemantha" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-xs font-medium text-gray-200 border border-gray-700">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 02 -->
+                    <div class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-pillar="fullstack" data-search="sentinel habit tracker analytics engine python fastapi react typescript postgresql tailwindcss">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-emerald-950 text-emerald-300 border border-emerald-800/60">
+                                    <i class="fas fa-laptop-code mr-1"></i> Full-Stack App
+                                </span>
+                                <span class="text-xs font-mono text-gray-500">Project #02</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">
+                                02. Sentinel Habit Tracker & Analytics
+                            </h3>
+                            <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                                High-performance daily habit tracker and productivity dashboard featuring real-time streak tracking, analytics visualizations, and secure FastAPI backend.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="badge-pill bg-gray-800 text-emerald-300 border border-gray-700">FastAPI</span>
+                                <span class="badge-pill bg-gray-800 text-emerald-300 border border-gray-700">React</span>
+                                <span class="badge-pill bg-gray-800 text-emerald-300 border border-gray-700">TypeScript</span>
+                                <span class="badge-pill bg-gray-800 text-emerald-300 border border-gray-700">PostgreSQL</span>
+                                <span class="badge-pill bg-gray-800 text-emerald-300 border border-gray-700">Tailwind</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-gray-800 flex items-center justify-between gap-2">
+                            <button onclick="openModal('02')" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center">
+                                <i class="fas fa-info-circle mr-1.5"></i> Architecture Details
+                            </button>
+                            <a href="https://github.com/SudeeraHemantha" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-xs font-medium text-gray-200 border border-gray-700">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 03 -->
+                    <div class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-pillar="aidata" data-search="ai career path skill navigation system python openai langchain fastapi pgvector react d3.js">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-purple-950 text-purple-300 border border-purple-800/60">
+                                    <i class="fas fa-brain mr-1"></i> AI & Data
+                                </span>
+                                <span class="text-xs font-mono text-gray-500">Project #03</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">
+                                03. AI Career Path & Skill Navigation
+                            </h3>
+                            <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                                AI-driven personalized career guidance engine that analyzes user skills and industry trends to generate interactive career roadmaps via vector search.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">Python</span>
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">OpenAI</span>
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">LangChain</span>
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">pgvector</span>
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">FastAPI</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-gray-800 flex items-center justify-between gap-2">
+                            <button onclick="openModal('03')" class="text-xs font-semibold text-purple-400 hover:text-purple-300 flex items-center">
+                                <i class="fas fa-info-circle mr-1.5"></i> Architecture Details
+                            </button>
+                            <a href="https://github.com/SudeeraHemantha" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-xs font-medium text-gray-200 border border-gray-700">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 04 -->
+                    <div class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-pillar="database" data-search="garage automotive repair management system postgresql pl/pgsql sql python rest api database architecture">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-amber-950 text-amber-300 border border-amber-800/60">
+                                    <i class="fas fa-database mr-1"></i> Database & Systems
+                                </span>
+                                <span class="text-xs font-mono text-gray-500">Project #04</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">
+                                04. Garage Repair & Management DB
+                            </h3>
+                            <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                                Database-centric Automotive Repair system with complex relational modeling, vehicle service history, inventory control, and SQL analytical views.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="badge-pill bg-gray-800 text-amber-300 border border-gray-700">PostgreSQL</span>
+                                <span class="badge-pill bg-gray-800 text-amber-300 border border-gray-700">PL/pgSQL</span>
+                                <span class="badge-pill bg-gray-800 text-amber-300 border border-gray-700">Triggers</span>
+                                <span class="badge-pill bg-gray-800 text-amber-300 border border-gray-700">REST API</span>
+                                <span class="badge-pill bg-gray-800 text-amber-300 border border-gray-700">Python</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-gray-800 flex items-center justify-between gap-2">
+                            <button onclick="openModal('04')" class="text-xs font-semibold text-amber-400 hover:text-amber-300 flex items-center">
+                                <i class="fas fa-info-circle mr-1.5"></i> Architecture Details
+                            </button>
+                            <a href="https://github.com/SudeeraHemantha" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-xs font-medium text-gray-200 border border-gray-700">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 05 -->
+                    <div class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-pillar="infrastructure" data-search="system staging multi environment deployment kubernetes helm docker compose bash parity preview">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-blue-950 text-blue-300 border border-blue-800/60">
+                                    <i class="fas fa-server mr-1"></i> Infrastructure
+                                </span>
+                                <span class="text-xs font-mono text-gray-500">Project #05</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">
+                                05. Staging & Multi-Environment Deploy
+                            </h3>
+                            <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                                Automated multi-environment staging setup simulating production, staging, and preview environments with deployment scripts and configuration isolation.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="badge-pill bg-gray-800 text-cyan-300 border border-gray-700">Kubernetes</span>
+                                <span class="badge-pill bg-gray-800 text-cyan-300 border border-gray-700">Docker Compose</span>
+                                <span class="badge-pill bg-gray-800 text-cyan-300 border border-gray-700">Bash Scripts</span>
+                                <span class="badge-pill bg-gray-800 text-cyan-300 border border-gray-700">Helm</span>
+                                <span class="badge-pill bg-gray-800 text-cyan-300 border border-gray-700">Nginx</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-gray-800 flex items-center justify-between gap-2">
+                            <button onclick="openModal('05')" class="text-xs font-semibold text-cyan-400 hover:text-cyan-300 flex items-center">
+                                <i class="fas fa-info-circle mr-1.5"></i> Architecture Details
+                            </button>
+                            <a href="https://github.com/SudeeraHemantha" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-xs font-medium text-gray-200 border border-gray-700">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 06 -->
+                    <div class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-pillar="aidata" data-search="face recognition smart attendance system computer vision python opencv face_recognition fastapi biometrics">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-purple-950 text-purple-300 border border-purple-800/60">
+                                    <i class="fas fa-brain mr-1"></i> AI & Data
+                                </span>
+                                <span class="text-xs font-mono text-gray-500">Project #06</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">
+                                06. Face Recognition Smart Attendance
+                            </h3>
+                            <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                                Biometric computer-vision attendance platform using live video stream face identification, anti-spoofing checks, and automated log registration.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">Python</span>
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">OpenCV</span>
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">face_recognition</span>
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">FastAPI</span>
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">SQLite</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-gray-800 flex items-center justify-between gap-2">
+                            <button onclick="openModal('06')" class="text-xs font-semibold text-purple-400 hover:text-purple-300 flex items-center">
+                                <i class="fas fa-info-circle mr-1.5"></i> Architecture Details
+                            </button>
+                            <a href="https://github.com/SudeeraHemantha" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-xs font-medium text-gray-200 border border-gray-700">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 07 -->
+                    <div class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-pillar="fullstack" data-search="intelligent cafe management pos system react websockets kitchen display node.js express pos">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-emerald-950 text-emerald-300 border border-emerald-800/60">
+                                    <i class="fas fa-laptop-code mr-1"></i> Full-Stack App
+                                </span>
+                                <span class="text-xs font-mono text-gray-500">Project #07</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">
+                                07. Intelligent Cafe & POS System
+                            </h3>
+                            <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                                Comprehensive POS and kitchen operations manager for cafes featuring live table grid, order management, kitchen display system (KDS), and WebSockets.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="badge-pill bg-gray-800 text-emerald-300 border border-gray-700">Node.js</span>
+                                <span class="badge-pill bg-gray-800 text-emerald-300 border border-gray-700">Express</span>
+                                <span class="badge-pill bg-gray-800 text-emerald-300 border border-gray-700">React</span>
+                                <span class="badge-pill bg-gray-800 text-emerald-300 border border-gray-700">WebSockets</span>
+                                <span class="badge-pill bg-gray-800 text-emerald-300 border border-gray-700">KDS</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-gray-800 flex items-center justify-between gap-2">
+                            <button onclick="openModal('07')" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center">
+                                <i class="fas fa-info-circle mr-1.5"></i> Architecture Details
+                            </button>
+                            <a href="https://github.com/SudeeraHemantha" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-xs font-medium text-gray-200 border border-gray-700">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 08 -->
+                    <div class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-pillar="aidata" data-search="intelligent context aware python chatbot nlp rag langchain nltk openai fastapi conversational ai">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-purple-950 text-purple-300 border border-purple-800/60">
+                                    <i class="fas fa-brain mr-1"></i> AI & Data
+                                </span>
+                                <span class="text-xs font-mono text-gray-500">Project #08</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">
+                                08. Context-Aware Python Chatbot
+                            </h3>
+                            <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                                Enterprise conversational AI assistant featuring Retrieval-Augmented Generation (RAG), intent classification, session memory, and tool calling.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">Python</span>
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">NLTK</span>
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">LangChain</span>
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">RAG</span>
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">FastAPI</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-gray-800 flex items-center justify-between gap-2">
+                            <button onclick="openModal('08')" class="text-xs font-semibold text-purple-400 hover:text-purple-300 flex items-center">
+                                <i class="fas fa-info-circle mr-1.5"></i> Architecture Details
+                            </button>
+                            <a href="https://github.com/SudeeraHemantha" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-xs font-medium text-gray-200 border border-gray-700">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 09 -->
+                    <div class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-pillar="aidata" data-search="jarvis voice activated desktop assistant speech recognition pyttsx3 system automation python">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-purple-950 text-purple-300 border border-purple-800/60">
+                                    <i class="fas fa-brain mr-1"></i> AI & Data
+                                </span>
+                                <span class="text-xs font-mono text-gray-500">Project #09</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">
+                                09. Jarvis Voice Desktop Assistant
+                            </h3>
+                            <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                                Hands-free voice assistant supporting speech recognition, voice synthesis, smart desktop automation, web searching, and system commands.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">Python</span>
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">SpeechRecognition</span>
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">pyttsx3</span>
+                                <span class="badge-pill bg-gray-800 text-purple-300 border border-gray-700">OS API</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-gray-800 flex items-center justify-between gap-2">
+                            <button onclick="openModal('09')" class="text-xs font-semibold text-purple-400 hover:text-purple-300 flex items-center">
+                                <i class="fas fa-info-circle mr-1.5"></i> Architecture Details
+                            </button>
+                            <a href="https://github.com/SudeeraHemantha" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-xs font-medium text-gray-200 border border-gray-700">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 10 -->
+                    <div class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-pillar="fullstack" data-search="freshmart grocery store delivery platform e-commerce express react mongodb stripe fullstack">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-emerald-950 text-emerald-300 border border-emerald-800/60">
+                                    <i class="fas fa-laptop-code mr-1"></i> Full-Stack App
+                                </span>
+                                <span class="text-xs font-mono text-gray-500">Project #10</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">
+                                10. FreshMart E-Commerce Platform
+                            </h3>
+                            <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                                Modern online grocery store platform featuring product search, dynamic shopping cart, checkout integration, order tracking, and admin management.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="badge-pill bg-gray-800 text-emerald-300 border border-gray-700">Express</span>
+                                <span class="badge-pill bg-gray-800 text-emerald-300 border border-gray-700">React</span>
+                                <span class="badge-pill bg-gray-800 text-emerald-300 border border-gray-700">MongoDB</span>
+                                <span class="badge-pill bg-gray-800 text-emerald-300 border border-gray-700">Stripe API</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-gray-800 flex items-center justify-between gap-2">
+                            <button onclick="openModal('10')" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center">
+                                <i class="fas fa-info-circle mr-1.5"></i> Architecture Details
+                            </button>
+                            <a href="https://github.com/SudeeraHemantha" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-xs font-medium text-gray-200 border border-gray-700">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Deployment Guide Banner Section -->
+        <section id="deployment" class="py-16 bg-gray-950/80 border-t border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="glass-card p-8 sm:p-10 rounded-3xl relative overflow-hidden border border-cyan-800/40">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                        <div class="lg:col-span-8 space-y-4">
+                            <div class="inline-flex items-center space-x-2 text-cyan-400 text-xs font-semibold uppercase tracking-wider">
+                                <i class="fas fa-rocket"></i>
+                                <span>DevOps & Deployment Readiness</span>
+                            </div>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+                                Ready for GitHub Pages & Vercel Deployment
+                            </h2>
+                            <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+                                This portfolio single-page application is structured with zero external build step requirements. You can deploy it instantly using <strong>GitHub Pages</strong> or <strong>Vercel</strong> in less than 2 minutes.
+                            </p>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                                <div class="p-4 rounded-xl bg-gray-900/90 border border-gray-800">
+                                    <div class="font-bold text-white text-sm mb-1"><i class="fab fa-github text-cyan-400 mr-2"></i> Option A: GitHub Pages</div>
+                                    <p class="text-xs text-gray-400">Push to main branch -> Enable GitHub Pages in repository settings pointing to root directory.</p>
+                                </div>
+                                <div class="p-4 rounded-xl bg-gray-900/90 border border-gray-800">
+                                    <div class="font-bold text-white text-sm mb-1"><i class="fas fa-bolt text-purple-400 mr-2"></i> Option B: Vercel Static</div>
+                                    <p class="text-xs text-gray-400">Import GitHub repository on Vercel dashboard -> Select zero-config static site deployment.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-4 flex flex-col justify-center items-center sm:items-end space-y-4">
+                            <a href="DEPLOYMENT.md" target="_blank" class="w-full sm:w-auto text-center px-6 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-gray-950 font-bold text-sm shadow-lg shadow-cyan-500/25 transition-all">
+                                <i class="fas fa-book-open mr-2"></i> Read DEPLOYMENT.md
+                            </a>
+                            <span class="text-xs text-gray-400">Fully documented step-by-step commands</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-950 border-t border-gray-800 text-gray-400 text-sm py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="space-y-1 text-center md:text-left">
+                <p class="text-white font-bold text-base">Sudeera Hemantha</p>
+                <p class="text-xs text-gray-400">Software Engineering Undergraduate • LNBTI Maharagama (Lanka Nippon BizTech Institute)</p>
+            </div>
+            
+            <div class="flex items-center space-x-6">
+                <a href="https://github.com/SudeeraHemantha" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-cyan-400 text-lg transition-colors">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="mailto:sudeerahemantha@example.com" class="text-gray-400 hover:text-cyan-400 text-lg transition-colors">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-cyan-400 text-lg transition-colors">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 mt-8 border-t border-gray-900 text-center text-xs text-gray-500">
+            © 2026 Sudeera Hemantha. Designed & Developed for Enterprise Portfolio Showcase at LNBTI Maharagama.
+        </div>
+    </footer>
+
+    <!-- Project Detail Modal -->
+    <div id="projectModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="glass-card bg-gray-900 border border-gray-700 w-full max-w-2xl rounded-2xl p-6 sm:p-8 relative shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
+            
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
+                &times;
+            </button>
+
+            <div class="border-b border-gray-800 pb-4">
+                <span id="modalNumber" class="text-xs font-mono text-cyan-400 font-semibold">PROJECT #01</span>
+                <h3 id="modalTitle" class="text-2xl font-bold text-white mt-1">Project Title</h3>
+                <p id="modalPillar" class="text-xs text-gray-400 mt-1">Pillar Domain</p>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Architectural Highlights</h4>
+                <p id="modalOverview" class="text-sm text-gray-300 leading-relaxed">Overview content goes here...</p>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Core Tech Stack</h4>
+                <div id="modalBadges" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-800 flex items-center justify-between">
+                <a id="modalGithub" href="https://github.com/SudeeraHemantha" target="_blank" rel="noopener noreferrer" 
+                   class="px-5 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-xs transition-colors">
+                    <i class="fab fa-github mr-2"></i> View Repository Code
+                </a>
+                <button onclick="closeModal()" class="px-4 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs font-medium">
+                    Close Window
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Interactive Script -->
+    <script>
+        const projectsData = {
+            '01': {
+                number: 'PROJECT #01',
+                title: '01. Enterprise Company Infrastructure',
+                pillar: 'DevOps & Infrastructure Engineering',
+                overview: 'Production-ready automated enterprise cloud & local infrastructure setup featuring IaC (Terraform), container orchestration (Docker), reverse proxying (Nginx), GitHub Actions CI/CD pipelines, and real-time monitoring via Prometheus & Grafana.',
+                tech: ['Docker', 'Terraform', 'Nginx', 'GitHub Actions', 'Prometheus', 'Grafana', 'Bash']
+            },
+            '02': {
+                number: 'PROJECT #02',
+                title: '02. Sentinel Habit Tracker & Analytics Engine',
+                pillar: 'Full-Stack Web Application',
+                overview: 'High-performance daily habit tracker and productivity dashboard featuring real-time streak tracking, analytics visualizations, interactive React/TypeScript frontend, and a secure Python FastAPI backend with PostgreSQL & Celery async task queue.',
+                tech: ['FastAPI', 'React', 'TypeScript', 'PostgreSQL', 'TailwindCSS', 'Celery', 'Redis']
+            },
+            '03': {
+                number: 'PROJECT #03',
+                title: '03. AI Career Path & Skill Navigation System',
+                pillar: 'AI / ML & Full-Stack Systems',
+                overview: 'AI-driven personalized career guidance engine that analyzes user skills, resume data, and industry trends to generate interactive career roadmaps and skill gap recommendations using pgvector vector similarity and LangChain.',
+                tech: ['Python', 'OpenAI API', 'LangChain', 'FastAPI', 'pgvector', 'React', 'D3.js']
+            },
+            '04': {
+                number: 'PROJECT #04',
+                title: '04. Garage & Automotive Repair Management System',
+                pillar: 'Database Architecture & Enterprise Software',
+                overview: 'Database-centric Automotive Repair and Workshop Management System with complex relational modeling, vehicle service history, inventory control, automated triggers, and SQL analytical views.',
+                tech: ['PostgreSQL', 'PL/pgSQL', 'Triggers', 'REST API', 'Python', 'Modern CSS']
+            },
+            '05': {
+                number: 'PROJECT #05',
+                title: '05. Staging & Multi-Environment Deployment System',
+                pillar: 'Cloud Platform & DevOps',
+                overview: 'Automated multi-environment staging setup simulating production, staging, and preview environments with automated deployment scripts, configuration isolation, Kubernetes/Helm manifests, and health checks.',
+                tech: ['Kubernetes', 'Helm', 'Docker Compose', 'Bash Automation', 'Nginx', 'CI/CD']
+            },
+            '06': {
+                number: 'PROJECT #06',
+                title: '06. Face Recognition Smart Attendance System',
+                pillar: 'Computer Vision & Artificial Intelligence',
+                overview: 'Biometric computer-vision attendance platform using live video stream face identification, anti-spoofing checks, automated log registration, and admin management portal powered by OpenCV and FastAPI.',
+                tech: ['Python', 'OpenCV', 'face_recognition', 'FastAPI', 'SQLite / PostgreSQL']
+            },
+            '07': {
+                number: 'PROJECT #07',
+                title: '07. Intelligent Cafe Management & POS System',
+                pillar: 'Full-Stack Point of Sale (POS)',
+                overview: 'Comprehensive POS and kitchen operations manager for cafes/restaurants featuring live table grid, order management, kitchen display system (KDS), real-time WebSockets updates, and billing.',
+                tech: ['Node.js', 'Express', 'React', 'Vite', 'WebSockets', 'SQLite / PostgreSQL']
+            },
+            '08': {
+                number: 'PROJECT #08',
+                title: '08. Intelligent Context-Aware Python Chatbot',
+                pillar: 'Conversational AI & NLP',
+                overview: 'Enterprise-grade conversational AI assistant featuring Retrieval-Augmented Generation (RAG), intent classification, session memory retention, tool calling, and clean web interface.',
+                tech: ['Python', 'NLTK', 'LangChain', 'OpenAI API', 'FastAPI', 'Web UI']
+            },
+            '09': {
+                number: 'PROJECT #09',
+                title: '09. Jarvis Voice-Activated Desktop Assistant',
+                pillar: 'Voice AI & System Automation',
+                overview: 'Hands-free voice assistant supporting speech recognition, voice synthesis, smart desktop automation, web searching, system commands, and custom voice skill plugins.',
+                tech: ['Python', 'SpeechRecognition', 'pyttsx3', 'Whisper API', 'OS API']
+            },
+            '10': {
+                number: 'PROJECT #10',
+                title: '10. FreshMart E-Commerce Platform',
+                pillar: 'Full-Stack E-Commerce',
+                overview: 'Modern online grocery store platform featuring product catalog, search & filtering, dynamic shopping cart, checkout integration with Stripe, order status tracking, and admin inventory panel.',
+                tech: ['Express / Node.js', 'React', 'MongoDB', 'PostgreSQL', 'Stripe API']
+            }
+        };
+
+        // Filter Logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+        const searchInput = document.getElementById('projectSearch');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-cyan-600', 'text-white', 'shadow-lg');
+                    b.classList.add('bg-gray-800/80', 'text-gray-300');
+                });
+                btn.classList.add('active', 'bg-cyan-600', 'text-white', 'shadow-lg');
+                btn.classList.remove('bg-gray-800/80', 'text-gray-300');
+                filterProjects();
+            });
+        });
+
+        searchInput.addEventListener('input', filterProjects);
+
+        function filterProjects() {
+            const activePillar = document.querySelector('.filter-btn.active').dataset.pillar;
+            const query = searchInput.value.toLowerCase().trim();
+
+            projectCards.forEach(card => {
+                const cardPillar = card.dataset.pillar;
+                const cardSearch = card.dataset.search;
+
+                const matchesPillar = (activePillar === 'all' || cardPillar === activePillar);
+                const matchesSearch = (!query || cardSearch.includes(query));
+
+                if (matchesPillar && matchesSearch) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Modal Handlers
+        function openModal(id) {
+            const data = projectsData[id];
+            if (!data) return;
+
+            document.getElementById('modalNumber').textContent = data.number;
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalPillar').textContent = data.pillar;
+            document.getElementById('modalOverview').textContent = data.overview;
+
+            const badgesContainer = document.getElementById('modalBadges');
+            badgesContainer.innerHTML = data.tech.map(t => `<span class="badge-pill bg-cyan-950 text-cyan-300 border border-cyan-800">${t}</span>`).join('');
+
+            document.getElementById('projectModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').classList.add('hidden');
+        }
+
+        // Close on background click
+        document.getElementById('projectModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('projectModal')) {
+                closeModal();
+            }
+        });
+    </script>
+
+</body>
+</html>

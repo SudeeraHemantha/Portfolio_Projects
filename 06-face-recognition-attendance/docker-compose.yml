@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: face_attendance_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-face_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-FaceSecure123!}
+      POSTGRES_DB: ${POSTGRES_DB:-face_attendance_db}
+    ports:
+      - "5436:5432"
+    volumes:
+      - face_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-face_admin} -d ${POSTGRES_DB:-face_attendance_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - face_net
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: face_attendance_web
+    restart: always
+    ports:
+      - "8006:8000"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-face_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-FaceSecure123!}
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB:-face_attendance_db}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - face_net
+
+volumes:
+  face_postgres_data:
+    driver: local
+
+networks:
+  face_net:
+    driver: bridge

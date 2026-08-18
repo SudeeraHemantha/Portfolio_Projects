@@ -1,0 +1,115 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "Hello",
+        "Hey there",
+        "Good morning",
+        "Good afternoon",
+        "Is anyone there?",
+        "Greetings"
+      ],
+      "responses": [
+        "Hello! Welcome to our enterprise assistant platform. How can I help you today?",
+        "Hi there! How may I assist you with your project?",
+        "Greetings! What can I do for you today?"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "Bye",
+        "See you later",
+        "Goodbye",
+        "Have a good day",
+        "I am leaving",
+        "Catch you later"
+      ],
+      "responses": [
+        "Goodbye! Have a great day ahead.",
+        "See you later! Feel free to reach out anytime.",
+        "Thank you for chatting. Have a wonderful day!"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "thanks",
+      "patterns": [
+        "Thanks",
+        "Thank you",
+        "That helps a lot",
+        "Awesome thanks",
+        "Much appreciated"
+      ],
+      "responses": [
+        "You are very welcome!",
+        "Glad I could help!",
+        "Anytime! Let me know if you need anything else."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "hours",
+      "patterns": [
+        "What are your working hours?",
+        "When are you open?",
+        "What time do you close?",
+        "Operating hours",
+        "Business hours"
+      ],
+      "responses": [
+        "Our digital platform is available 24/7. Live customer support operates Monday through Friday, 8:00 AM to 6:00 PM EST.",
+        "We are online 24/7! Human support agent hours are Mon-Fri 8am-6pm EST."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "services",
+      "patterns": [
+        "What services do you offer?",
+        "What can this system do?",
+        "What capabilities do you have?",
+        "List your features",
+        "How can you help me?"
+      ],
+      "responses": [
+        "We specialize in Cloud Infrastructure Automation, Full-Stack Web Development, AI/ML Vector Pipelines, Computer Vision, and Enterprise Conversational Systems.",
+        "Our platform provides automated cloud deployment, AI-driven analytics, database architecture, and real-time operational dashboard systems."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "pricing",
+      "patterns": [
+        "How much does it cost?",
+        "What are your pricing plans?",
+        "Do you have a free tier?",
+        "Subscription pricing",
+        "Cost details"
+      ],
+      "responses": [
+        "We offer flexible tier plans starting with a Free Community tier, a Professional tier at $49/mo, and custom Enterprise licensing. Would you like details on Enterprise plans?",
+        "Pricing ranges from our Free Starter tier to Enterprise custom quotes. Type 'enterprise' to connect with sales."
+      ],
+      "context_set": "pricing_inquiry"
+    },
+    {
+      "tag": "human_agent",
+      "patterns": [
+        "Can I speak to a human?",
+        "I need a real person",
+        "Connect me to support agent",
+        "Human representative",
+        "Escalate to agent"
+      ],
+      "responses": [
+        "I am connecting you to a senior support engineer. Please hold while we transfer your session context...",
+        "Escalating your session to an available support specialist now."
+      ],
+      "context_set": ""
+    }
+  ]
+}

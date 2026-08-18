@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  jarvis-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jarvis_voice_assistant
+    restart: always
+    ports:
+      - "8009:8000"
+    environment:
+      LOG_LEVEL: INFO
+      PORT: 8000
+    networks:
+      - jarvis_net
+
+networks:
+  jarvis_net:
+    driver: bridge

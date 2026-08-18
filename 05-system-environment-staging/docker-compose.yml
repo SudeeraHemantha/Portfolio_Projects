@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  staging-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: staging_api_service
+    restart: always
+    environment:
+      ENV_NAME: ${ENV_NAME:-staging}
+      PORT: 8000
+      LOG_LEVEL: INFO
+    ports:
+      - "8005:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - staging_net
+
+  staging-redis:
+    image: redis:7-alpine
+    container_name: staging_redis_service
+    restart: always
+    command: redis-server --appendonly yes
+    ports:
+      - "6385:6379"
+    volumes:
+      - staging_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - staging_net
+
+  staging-nginx:
+    image: nginx:alpine
+    container_name: staging_nginx_proxy
+    restart: always
+    ports:
+      - "8085:80"
+    depends_on:
+      staging-api:
+        condition: service_healthy
+    networks:
+      - staging_net
+
+volumes:
+  staging_redis_data:
+    driver: local
+
+networks:
+  staging_net:
+    driver: bridge

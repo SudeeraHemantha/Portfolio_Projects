@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: garage_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-garage_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-GarageSecure123!}
+      POSTGRES_DB: ${POSTGRES_DB:-garage_db}
+    ports:
+      - "5435:5432"
+    volumes:
+      - garage_postgres_data:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-garage_admin} -d ${POSTGRES_DB:-garage_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - garage_net
+
+volumes:
+  garage_postgres_data:
+    driver: local
+
+networks:
+  garage_net:
+    driver: bridge

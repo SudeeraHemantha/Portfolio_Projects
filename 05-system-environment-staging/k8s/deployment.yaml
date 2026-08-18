@@ -1,0 +1,5 @@
+# Kubernetes Deployment Manifest
+apiversion: apps/v1
+kind: Deployment
+metadata:
+  name: staging-app

@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  chatbot-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: intelligent_chatbot_api
+    restart: always
+    ports:
+      - "8008:8000"
+    environment:
+      LOG_LEVEL: INFO
+      PORT: 8000
+    networks:
+      - chatbot_net
+
+networks:
+  chatbot_net:
+    driver: bridge
