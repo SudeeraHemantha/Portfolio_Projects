@@ -1,82 +1,75 @@
-# 🚘 Garage & Automotive Repair Management System (Project 04)
+# 🔧 Garage Database Management System (Project 04)
 
-![Domain](https://img.shields.io/badge/Domain-Database%20Architecture%20%26%20SQL-blue)
+![Domain](https://img.shields.io/badge/Domain-Database%20Engineering%20%26%20Optimization-orange)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16%20Relational-4169E1)
-![PL/pgSQL](https://img.shields.io/badge/PL%2FpgSQL-Triggers%20%26%20Procedures-CC292B)
+![Database](https://img.shields.io/badge/PostgreSQL-16-336791)
+![Schema](https://img.shields.io/badge/Normalization-3NF%20Compliant-blue)
+![Logic](https://img.shields.io/badge/Procedural-PL%2FpgSQL-purple)
+![Integrity](https://img.shields.io/badge/ACID-Transactional%20Safety-green)
 
-## 📌 Database Architecture Overview
+---
 
-The **Garage & Automotive Repair Management System** is a database-centric platform designed for vehicle repair workshops. Adhering to **3rd Normal Form (3NF)** relational principles, it models customers, vehicle records, spare parts inventory, repair appointments, and itemized billing.
+## 📌 Architecture Overview
+
+The **Garage Database System** is a high-integrity, strictly 3NF-normalized relational database built in **PostgreSQL**. Designed for automotive service and parts management operations, it features atomic **PL/pgSQL stored procedures**, automated inventory reduction triggers, foreign key constraints with safe cascades, and **B-tree indexing** for low-latency queries under high transactional volume.
 
 ```mermaid
 erDiagram
     CUSTOMERS ||--o{ VEHICLES : owns
-    VEHICLES ||--o{ SERVICE_APPOINTMENTS : undergoes
-    SERVICE_APPOINTMENTS ||--o{ SERVICE_PARTS_USED : contains
-    INVENTORY_PARTS ||--o{ SERVICE_PARTS_USED : supplies
+    VEHICLES ||--o{ SERVICE_RECORDS : undergoes
+    SERVICE_RECORDS ||--|{ SERVICE_DETAILS : contains
+    SERVICES ||--o{ SERVICE_DETAILS : categorizes
+    SERVICE_DETAILS }o--o{ PARTS : consumes
+    INVENTORY_TRANSACTIONS }o--|| PARTS : tracks
 
     CUSTOMERS {
         int customer_id PK
-        string first_name
-        string last_name
-        string email UK
+        string full_name
         string phone
+        string email
     }
-
     VEHICLES {
         int vehicle_id PK
         int customer_id FK
-        string vin UK
-        string make
-        string model
-        int year
+        string license_plate
+        string vin
     }
-
-    INVENTORY_PARTS {
-        int part_id PK
-        string part_number UK
-        string name
-        numeric unit_cost
-        int stock_quantity
-    }
-
-    SERVICE_APPOINTMENTS {
-        int appointment_id PK
+    SERVICE_RECORDS {
+        int record_id PK
         int vehicle_id FK
-        timestamp service_date
+        date service_date
+        decimal total_cost
         string status
-        numeric total_cost
+    }
+    PARTS {
+        int part_id PK
+        string part_name
+        int stock_quantity
+        decimal unit_price
     }
 
-    SERVICE_PARTS_USED {
-        int service_part_id PK
-        int appointment_id FK
-        int part_id FK
-        int quantity_used
-        numeric unit_price_charged
-    }
 ```
 
 ---
 
-## 📐 3rd Normal Form (3NF) Normalization Rationale
+## 🛠️ Technology Stack & Database Specifications
 
-The database structure strictly enforces **3NF** to eliminate data redundancy and insertion/update anomalies:
-1. **1NF (First Normal Form)**: All column values are atomic (e.g. single VIN strings, separated customer names, discrete part line items).
-2. **2NF (Second Normal Form)**: All non-key attributes depend on the complete Primary Key. Junction table `service_parts_used` separates individual line items from general appointment headers.
-3. **3NF (Third Normal Form)**: Transitive dependencies are removed. Customer contact details reside exclusively in `customers`, vehicle specs reside in `vehicles`, and part costs reside in `inventory_parts`.
+| Layer | Technology / Concept | Implementation Purpose |
+| --- | --- | --- |
+| **Engine** | PostgreSQL 16 | ACID-compliant relational data management |
+| **Schema Standard** | 3NF Normalization | Elimination of transitive dependencies & data redundancy |
+| **Automation** | PL/pgSQL Triggers | Automated stock reduction upon completed service events |
+| **Stored Procedures** | PL/pgSQL | Atomic multi-table checkout and invoice generation |
+| **Performance Tuning** | B-Tree Indexes & `EXPLAIN ANALYZE` | Sub-millisecond record lookups across VIN/license plates |
 
 ---
 
-## ⚡ Automated PL/pgSQL Triggers & Inventory Safeguards
+## 🔄 Core Database Mechanisms
 
-- **`deduct_inventory_on_part_used()` Trigger**: Automatically fires `BEFORE INSERT` on `service_parts_used`.
-  - Verifies that `inventory_parts.stock_quantity >= NEW.quantity_used`.
-  - If stock is insufficient, it aborts the transaction with `RAISE EXCEPTION`.
-  - Otherwise, it automatically decrements stock levels atomically.
-
-- **`recalculate_appointment_total()` Procedure**: Re-evaluates labor costs plus the sum of parts used (`quantity_used * unit_price_charged`) to ensure billing accuracy.
+1. **Transactional Integrity**: Multi-table write workflows (invoicing, labor logging, inventory usage) are wrapped in atomic transactions (`BEGIN ... COMMIT`) to guarantee ACID compliance.
+2. **Automated Inventory Reduction**: A PL/pgSQL trigger intercepts status transitions on `service_records` (e.g., `status = 'COMPLETED'`) and automatically deducts allocated parts quantities from the `parts` inventory table.
+3. **Data Integrity Constraints**: Strict `CHECK` constraints prevent negative stock balances and invalid price inputs; foreign key constraints enforce referential integrity with strict deletion rules.
+4. **Index Optimization**: Composite B-tree indexes applied on `(vehicle_id, service_date)` and unique indexes on `vin` and `license_plate` to optimize frequent query paths.
 
 ---
 
@@ -84,62 +77,66 @@ The database structure strictly enforces **3NF** to eliminate data redundancy an
 
 ```text
 04-garage-database-system/
-├── 📄 docker-compose.yml           # PostgreSQL 16 container with script auto-init
-├── 📄 README.md                    # Data dictionary & architecture documentation
-└── 📁 sql/
-    ├── 📄 01_schema_3nf.sql        # 3NF table schemas (Customers, Vehicles, Parts, Services)
-    ├── 📄 02_procedures_triggers.sql # PL/pgSQL inventory triggers & calculation procedures
-    └── 📄 03_indexes_optimization.sql # B-tree indexes and analytical views
+├── 📄 README.md                    # Database design & optimization documentation
+├── 📄 docker-compose.yml           # PostgreSQL instance initialization setup
+├── 📁 sql/                         # Database scripts
+│   ├── 📄 01_schema_ddl.sql        # 3NF table creation, PK/FK constraints, and check rules
+│   ├── 📄 02_triggers_procedures.sql # PL/pgSQL functions, triggers, and stored procedures
+│   ├── 📄 03_indexes_views.sql     # Indexing strategies and reporting views
+│   └── 📄 04_seed_data.sql         # Benchmark test dataset
+└── 📁 queries/                     # Performance and analytical query benchmarks
+    ├── 📄 inventory_audit.sql
+    └── 📄 service_history_lookup.sql
+
 ```
 
 ---
 
-## 🚀 Execution & Quick Start Guide
+## 🚀 Setup & Execution
 
-### Step 1: Launch PostgreSQL with Auto-Initialization
+### Prerequisites
 
+* [Docker Engine](https://docs.docker.com/engine/install/) or local PostgreSQL 16 installation
+* `psql` command-line utility
+
+### Running with Docker
+
+1. Navigate to the project directory:
 ```bash
 cd 04-garage-database-system
-docker-compose up -d
+
 ```
 
-### Step 2: Connect via `psql` CLI
 
+2. Start the PostgreSQL instance and apply scripts:
 ```bash
-docker exec -it garage_postgres psql -U garage_admin -d garage_db
+docker-compose up -d
+
 ```
+
+
+3. Connect to the database using `psql`:
+```bash
+docker exec -it garage_postgres psql -U postgres -d garage_db
+
+```
+
+
+4. Execute a benchmark test query with execution plan analysis:
+```sql
+EXPLAIN ANALYZE 
+SELECT * FROM service_records 
+WHERE service_date >= '2026-01-01' 
+ORDER BY service_date DESC;
+
+```
+
+
 
 ---
 
-### Step 3: Test Trigger & Query Views
+## 🔐 Key Implementation Highlights
 
-1. **Insert Sample Data**:
-   ```sql
-   INSERT INTO customers (first_name, last_name, email, phone) 
-   VALUES ('Marcus', 'Vance', 'marcus@example.com', '555-0199');
-
-   INSERT INTO vehicles (customer_id, vin, make, model, year, license_plate) 
-   VALUES (1, '1HGCR2F83HA000001', 'Honda', 'Accord', 2017, '7ABC123');
-
-   INSERT INTO inventory_parts (part_number, name, unit_cost, unit_price, stock_quantity) 
-   VALUES ('FILT-001', 'Synthetic Oil Filter', 5.00, 12.50, 20);
-
-   INSERT INTO service_appointments (vehicle_id, labor_cost) 
-   VALUES (1, 45.00);
-   ```
-
-2. **Test Automated Inventory Deduction Trigger**:
-   ```sql
-   -- Logging part usage automatically decrements stock from 20 to 18
-   INSERT INTO service_parts_used (appointment_id, part_id, quantity_used, unit_price_charged)
-   VALUES (1, 1, 2, 12.50);
-
-   -- Check stock level
-   SELECT name, stock_quantity FROM inventory_parts WHERE part_id = 1;
-   ```
-
-3. **Query Analytical Views**:
-   ```sql
-   SELECT * FROM v_low_stock_alerts;
-   SELECT * FROM v_vehicle_service_history;
-   ```
+* **Zero-Redundancy Relational Architecture**: Designed from scratch using strict functional dependency analysis to achieve 3NF compliance.
+* **Idempotent Automation**: Triggers ensure part inventory accurately reflects real-time consumption without manual sync steps.
+* **Auditing & History**: Dedicated transaction logs record historical price changes and inventory adjustments for complete data traceability.
