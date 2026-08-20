@@ -1,54 +1,57 @@
-# ⚙️ Staging & Multi-Environment Deployment System (Project 05)
+# ⚙️ System Environment Staging & Parity Automation (Project 05)
 
-![Domain](https://img.shields.io/badge/Domain-DevOps%20%26%20Cloud%20Platform-blue)
+![Domain](https://img.shields.io/badge/Domain-DevOps%20%26%20Systems%20Engineering-darkblue)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
-![Docker](https://img.shields.io/badge/Docker-Environment%20Parity-2496ED)
-![Bash](https://img.shields.io/badge/Bash-OS--Aware%20Automation-4EAA25)
+![OS](https://img.shields.io/badge/Environment-Ubuntu%20WSL%20%7C%20Windows-E95420)
+![Shell](https://img.shields.io/badge/Automation-Bash%20%26%20Shell%20Scripting-4EAA25)
+![Docker](https://img.shields.io/badge/Containers-Docker%20Parity-2496ED)
 
-## 📌 Environment Architecture Overview
+---
 
-The **Staging & Multi-Environment Deployment System** enforces strict **12-Factor Environment Parity** across local development, staging preview, and production infrastructure. Using automated OS detection, Docker Compose profiles, and health checks, it guarantees zero environment-drift bugs when migrating code across host operating systems.
+## 📌 Architecture Overview
+
+The **System Environment Staging** project provides automated provisioning scripts and environment parity configurations for cross-platform software engineering. It standardizes runtime dependencies, shell configurations, database instances, and diagnostic checks across **Ubuntu WSL** and **Windows**, eliminating cross-platform configuration drift and environment-specific bugs.
 
 ```mermaid
 graph TD
-    HostOS[Host Operating System: Linux / WSL / macOS / Windows] -->|Auto-Detect OS| Provisioner[setup_environment.sh]
-    Provisioner -->|Verify Docker Daemon & Env| Config[.env.staging Config Isolation]
-    Config -->|Deploy Stack| Compose[Docker Compose Parity Stack]
-
-    subgraph Containerized Staging Stack
-        Compose --> Proxy[staging-nginx:8085]
-        Proxy --> API[staging-api:8005]
-        API --> Redis[staging-redis:6385]
+    Host["Developer Host Machine (Windows / WSL)"] -->|Run Setup Trigger| Init["scripts/bootstrap.sh"]
+    
+    subgraph StagingPipeline["Automated Provisioning Pipeline"]
+        Init -->|Detect Host OS & Architecture| Detect["OS Detection & Path Resolution"]
+        Detect -->|Install Core Packages| Pkg["Apt / Package Provisioning"]
+        Detect -->|Configure Shell & Dotfiles| Dot["Zsh / Bash & Git Config Sync"]
+        Detect -->|Bootstrap Isolated Containers| Containers["Docker Dev Containers"]
     end
 
-    API -->|Diagnostics| HealthCheck[health_check.sh]
+    subgraph HealthVerification["Environment Health Verification"]
+        Dot -->|Run Health Probe| Health["scripts/verify_env.sh"]
+        Containers -->|Service Uptime & Port Check| Health
+    end
+
+    Health -->|Status Report: All Checks Passed| Ready["Ready Dev Workspace"]
+
 ```
 
 ---
 
-## 💻 Cross-OS Compatibility & Parity Matrix
+## 🛠️ Technology Stack & Core Tooling
 
-| Host Environment | Supported Shell | OS Detection Signature | Execution Strategy |
-| :--- | :--- | :--- | :--- |
-| **Linux (Ubuntu/Debian)** | Native Bash | `Linux` | Direct Docker Engine socket mounting |
-| **macOS (Darwin)** | Zsh / Bash | `Darwin` | Docker Desktop VM execution |
-| **Windows Subsystem for Linux (WSL)** | WSL Bash | `Linux (microsoft)` | WSL2 Linux kernel Docker backend |
-| **Windows Native (Git Bash)** | Git Bash / MSYS | `MINGW / MSYS` | Windows Docker Desktop Pipe socket |
+| Component | Tool / Technology | Purpose | Implementation Detail |
+| --- | --- | --- | --- |
+| **Shell Automation** | Bash 5.0+ | Idempotent environment setup & package installation | [`scripts/bootstrap.sh`](https://www.google.com/search?q=./scripts/bootstrap.sh) |
+| **Verification Engine** | Shell / Python | Automated sanity checks for runtimes and tools | [`scripts/verify_env.sh`](https://www.google.com/search?q=./scripts/verify_env.sh) |
+| **Container Runtimes** | Docker / Compose | Isolated staging services (Postgres, Redis, Node) | [`docker-compose.yml`](https://www.google.com/search?q=./docker-compose.yml) |
+| **Config Synchronization** | Dotfiles / Symlinks | Uniform shell aliases, prompt configs, and Git paths | [`configs/`](https://www.google.com/search?q=./configs/) |
+| **OS Target Layer** | Ubuntu (WSL2) / Windows | Cross-platform development parity | Subsystem bridge configurations |
 
 ---
 
-## 🛠️ Automated Scripts & Tooling
+## 🔄 Automated Staging & Parity Workflows
 
-1. **[`scripts/setup_environment.sh`](./scripts/setup_environment.sh)**:
-   - Identifies the host operating system automatically.
-   - Inspects Docker daemon responsiveness.
-   - Generates `.env.staging` defaults if configuration is missing.
-   - Builds and boots the staging container stack.
-
-2. **[`scripts/health_check.sh`](./scripts/health_check.sh)**:
-   - Validates running container health status.
-   - Performs HTTP probes on API endpoints (`http://localhost:8005/health`).
-   - Executes Redis `PING-PONG` connectivity check.
+1. **Idempotent Bootstrapping**: `bootstrap.sh` inspects existing tool chains (`python3`, `node`, `docker`, `psql`) and installs missing dependencies without overwriting existing configs.
+2. **Path & Line-Ending Normalization**: Enforces strict `LF` line-endings and path translations across Windows host drives (`/mnt/c/`) and WSL root filesystems.
+3. **Automated Diagnostic Health Probes**: `verify_env.sh` runs automated assertions to verify installed CLI tool versions, database connectivity, and port availability.
+4. **Isolated Runtime Staging**: Configures local background services in lightweight Docker networks to keep the host operating system clean.
 
 ---
 
@@ -56,48 +59,62 @@ graph TD
 
 ```text
 05-system-environment-staging/
-├── 📄 docker-compose.yml           # Multi-service staging stack (API, Redis, Nginx)
-├── 📄 Dockerfile                   # Multi-stage Python 3.11 build
-├── 📄 README.md                    # Comprehensive cross-OS staging documentation
-└── 📁 scripts/
-    ├── 📄 setup_environment.sh     # Cross-platform automated provisioning engine
-    └── 📄 health_check.sh          # Environment diagnostic and health suite
+├── 📄 README.md                    # Environment specifications and usage guide
+├── 📄 docker-compose.yml           # Base development service staging (DBs, Caches)
+├── 📁 configs/                     # Standardized configuration templates
+│   ├── 📄 .bashrc_custom           # Cross-platform aliases and path definitions
+│   └── 📄 gitconfig.template       # Standard Git credentials and format configs
+├── 📁 docs/                        # Architecture guides and setup troubleshooting
+└── 📁 scripts/                     # Executable automation scripts
+    ├── 📄 bootstrap.sh             # Main idempotent system setup script
+    ├── 📄 setup_wsl_bridge.sh      # WSL2 network and drive mounting automation
+    └── 📄 verify_env.sh            # Diagnostic environment verification script
+
 ```
 
 ---
 
-## 🚀 Execution & Quick Start Guide
+## 🚀 Execution & Verification
 
-### Step 1: Run Provisioning Script
+### Running the Setup Automation
 
-#### On Linux / WSL / macOS:
+1. Navigate to the project directory:
 ```bash
 cd 05-system-environment-staging
-chmod +x scripts/setup_environment.sh scripts/health_check.sh
-./scripts/setup_environment.sh
+
 ```
 
-#### On Windows (Git Bash):
+
+2. Make scripts executable:
 ```bash
-bash scripts/setup_environment.sh
+chmod +x scripts/*.sh
+
 ```
+
+
+3. Execute the environment bootstrap script:
+```bash
+./scripts/bootstrap.sh
+
+```
+
+
+4. Run the health verification probe:
+```bash
+./scripts/verify_env.sh
+
+```
+
+
 
 ---
 
-### Step 2: Run Diagnostic Health Checks
+## 🔐 Key Implementation Highlights
 
-```bash
-./scripts/health_check.sh
-```
+* **Zero-Drift Idempotency**: Scripts can be safely executed multiple times without corrupting existing configurations or duplicating package installs.
+* **Deterministic Verification**: Fast exit codes on diagnostic checks prevent development on broken or unprovisioned environments.
+* **Cross-Platform Compatibility**: Fully tested across native Ubuntu environments and Windows Subsystem for Linux (WSL2).
 
----
+Let me know once committed, and we will proceed to **Project 06: `06-face-recognition-attendance`**.
 
-### Step 3: Direct API Probes
-
-```bash
-# API Health Probe
-curl http://localhost:8005/health
-
-# Proxy Gateway Probe
-curl http://localhost:8085
 ```
