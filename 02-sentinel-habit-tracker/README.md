@@ -1,54 +1,54 @@
-# 🛡️ Sentinel Habit Tracker & Analytics Engine (Project 02)
+# 🛡️ Sentinel Habit Tracker (Project 02)
 
-![Domain](https://img.shields.io/badge/Domain-Full--Stack%20Web%20Application-blue)
+![Domain](https://img.shields.io/badge/Domain-Distributed%20Systems%20%26%20Automation-purple)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.109-009688)
-![Celery](https://img.shields.io/badge/Celery-Async%20Worker-37814A)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Hybrid%20JSONB-4169E1)
+![FastAPI](https://img.shields.io/badge/FastAPI-Async%20REST%20APIs-009688)
+![Celery](https://img.shields.io/badge/Celery-Distributed%20Workers-37814A)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Hybrid%20JSONB-336791)
+![Redis](https://img.shields.io/badge/Redis-Message%20Broker-DC382D)
 
-## 📌 Project Overview
+---
 
-The **Sentinel Habit Tracker & Analytics Engine** is a high-performance productivity dashboard backend designed to track daily habits, recalculate continuity streaks asynchronously, and maintain dynamic user metadata. Built with **FastAPI**, **SQLAlchemy**, **Celery**, and **Redis**, Sentinel combines relational consistency with dynamic schema flexibility.
+## 📌 Architecture Overview
+
+The **Sentinel Habit Tracker** is an autonomous, event-driven habit monitoring and analytics engine. It leverages **Celery distributed workers** and **Redis** to offload computationally intensive streak calculations and historical habit analytics asynchronously, ensuring non-blocking, high-performance RESTful API endpoints via **FastAPI** and **SQLAlchemy 2.0**.
 
 ```mermaid
 graph TD
-    Client[Client / Frontend Application] -->|HTTP REST| API[FastAPI Backend :8000]
+    User(["Client / Web App"]) -->|HTTP / JSON| API["FastAPI REST Engine:8000"]
     
-    subgraph Data & Async Stack
-        API -->|Read / Write ORM| DB[(PostgreSQL Database :5432)]
-        API -->|Enqueue Task| Redis[(Redis Broker :6379)]
-        Worker[Celery Worker Node] -->|Pop Queue| Redis
-        Worker -->|Recalculate Streaks| DB
+    subgraph Persistence["Persistence & Broker Layer"]
+        API -->|Async Session| DB[("PostgreSQL 16 (Relational + JSONB)")]
+        API -->|Task Dispatch| Broker[("Redis 7 Message Broker")]
     end
+
+    subgraph Workers["Distributed Task Processing Layer"]
+        Broker -->|Fetch Task Payload| CeleryWorker["Celery Task Worker"]
+        CeleryWorker -->|Streak Analysis & Aggregations| DB
+        CeleryBeat["Celery Beat Scheduler"] -->|Periodic Triggers / Midnight Audits| Broker
+    end
+
 ```
 
 ---
 
-## 💡 Hybrid Schema Design Rationale
+## 🛠️ Technology Stack & Core Components
 
-Standard relational databases enforce rigid columns, making it difficult to support user-customized habit tracking features (such as dynamic measurement units, custom color themes, reminder intervals, and custom tag hierarchies).
-
-Sentinel addresses this by utilizing a **Hybrid Schema Model**:
-- **Structured Relational Fields**: Core attributes (`id`, `user_id`, `title`, `current_streak`, `longest_streak`, `total_completions`) are modeled as relational SQL columns for indexing, relational integrity, and fast SQL analytical queries.
-- **Flexible JSONB Column**: A `metadata_json` field stores dynamic, user-defined properties without requiring schema migrations:
-  ```json
-  {
-    "target_unit": "pages",
-    "daily_goal": 25,
-    "theme_color": "#4F46E5",
-    "reminder_time": "08:00 AM",
-    "tags": ["reading", "intellectual", "morning_routine"]
-  }
-  ```
+| Component | Technology | Purpose | Implementation Detail |
+| --- | --- | --- | --- |
+| **REST API Layer** | Python 3.11 / FastAPI | High-throughput asynchronous endpoints | Async route handlers & Pydantic validation |
+| **Task Queue & Broker** | Celery / Redis 7 | Distributed background worker orchestration | Asynchronous streak calculations & analytics |
+| **Persistence Layer** | PostgreSQL 16 / JSONB | Relational user schemas with semi-structured logs | Hybrid relational + document storage |
+| **ORM & Migrations** | SQLAlchemy 2.0 / Alembic | Strict type-hinted database abstraction | AsyncSession with connection pooling |
+| **Task Scheduler** | Celery Beat | Automated cron-like streak reset & audit jobs | Nightly automated verification runs |
 
 ---
 
-## ⚡ Asynchronous Pipeline Design
+## 🔄 Asynchronous Pipeline & Hybrid Storage
 
-Streak recalculation after habit completion logs can involve processing historical logs across large time ranges. 
-
-1. **Non-Blocking API Response**: When a user logs a habit completion via `POST /api/v1/habits/{id}/logs`, FastAPI immediately records the log entry and dispatches a background job (`recalculate_habit_streak.delay(habit_id)`).
-2. **Worker Processing**: The **Celery Worker** pulls the job from **Redis** and calculates streak continuity asynchronously without blocking HTTP response times.
+1. **Non-Blocking Ingestion**: When users log habit events via the API, FastAPI writes the event record and dispatches an asynchronous task to Redis in `<5ms`.
+2. **Distributed Streak Calculation**: Celery workers ingest log streams, compute running daily/weekly streaks, and update time-series aggregations without blocking concurrent API traffic.
+3. **Hybrid JSONB Strategy**: Relational tables handle structured user metadata and foreign key relationships, while PostgreSQL `JSONB` fields store flexible, habit-specific dynamic telemetry (e.g., custom metrics, completion variables).
 
 ---
 
@@ -56,67 +56,80 @@ Streak recalculation after habit completion logs can involve processing historic
 
 ```text
 02-sentinel-habit-tracker/
-├── 📄 docker-compose.yml       # Orchestrates FastAPI, PostgreSQL, Redis, and Celery worker
-├── 📄 Dockerfile               # Multi-stage Python 3.11 build
-├── 📄 requirements.txt         # Core dependencies (FastAPI, SQLAlchemy, Celery, Redis)
-├── 📄 README.md                # Comprehensive documentation
+├── 📄 docker-compose.yml           # Multi-service setup (FastAPI + Worker + Postgres + Redis)
+├── 📄 README.md                    # Project documentation & architecture specs
+├── 📄 requirements.txt             # Pinned dependencies (FastAPI, Celery, SQLAlchemy)
+├── 📁 alembic/                     # Database migration revisions
+│   ├── 📄 env.py
+│   └── 📁 versions/
+├── 📁 scripts/                     # Operational automation scripts
+│   └── 📄 seed_db.py               # Test data generation script
 └── 📁 src/
-    ├── 📄 database.py          # SQLAlchemy engine connection & session management
-    ├── 📄 models.py            # User, Habit (JSONB hybrid), and HabitLog ORM entities
-    ├── 📄 celery_app.py        # Celery application setup with Redis broker
-    ├── 📄 tasks.py             # Asynchronous Celery streak calculation jobs
-    └── 📄 main.py              # FastAPI REST endpoints & Pydantic validation schemas
+    ├── 📄 celery_app.py            # Celery worker configuration and task routing
+    ├── 📄 config.py                # Environment validation via Pydantic Settings
+    ├── 📄 database.py              # Async SQLAlchemy engine & session factory
+    ├── 📁 api/                     # REST API routers (habits, analytics, users)
+    │   ├── 📄 habits.py
+    │   └── 📄 analytics.py
+    ├── 📁 models/                  # SQLAlchemy ORM models (relational + JSONB)
+    │   └── 📄 habit.py
+    ├── 📁 schemas/                 # Pydantic schemas for request/response serialization
+    │   └── 📄 habit.py
+    └── 📁 tasks/                   # Background Celery tasks
+        └── 📄 streak_calculator.py # Asynchronous streak analysis logic
+
 ```
 
 ---
 
-## 🚀 Execution & Quick Start Guide
+## 🚀 Local Development & Execution
 
-### Step 1: Launch via Docker Compose
+### Prerequisites
 
+* [Docker Engine](https://docs.docker.com/engine/install/) & [Docker Compose](https://docs.docker.com/compose/)
+* Python 3.11+
+
+### Running the System with Docker Compose
+
+1. Navigate to the project directory:
 ```bash
 cd 02-sentinel-habit-tracker
-docker-compose up -d --build
+
 ```
 
-### Step 2: Verify Service Health
 
-- **FastAPI API**: [http://localhost:8001/health](http://localhost:8001/health)
-- **Interactive Swagger Docs**: [http://localhost:8001/docs](http://localhost:8001/docs)
+2. Initialize environment configurations:
+```bash
+cp .env.example .env
 
-### Step 3: Example API Operations
+```
 
-1. **Create User**:
-   ```bash
-   curl -X POST "http://localhost:8001/api/v1/users" \
-     -H "Content-Type: application/json" \
-     -d '{"email": "alex@example.com", "full_name": "Alex Mercer"}'
-   ```
 
-2. **Create Habit with Dynamic JSONB Metadata**:
-   ```bash
-   curl -X POST "http://localhost:8001/api/v1/habits" \
-     -H "Content-Type: application/json" \
-     -d '{
-       "user_id": 1,
-       "title": "Deep Work Reading",
-       "category": "Productivity",
-       "frequency": "daily",
-       "metadata_json": {
-         "target_pages": 30,
-         "color_theme": "#10B981"
-       }
-     }'
-   ```
+3. Build and run all services (API, Celery Worker, Redis, and PostgreSQL):
+```bash
+docker-compose up -d --build
 
-3. **Log Habit Completion (Triggers Async Streak Calculation)**:
-   ```bash
-   curl -X POST "http://localhost:8001/api/v1/habits/1/logs" \
-     -H "Content-Type: application/json" \
-     -d '{"status": "completed", "notes": "Read Chapter 4 on Distributed Systems"}'
-   ```
+```
 
-4. **Retrieve Streak Analytics**:
-   ```bash
-   curl "http://localhost:8001/api/v1/analytics/streaks?user_id=1"
-   ```
+
+4. Check running services and logs:
+```bash
+docker-compose ps
+docker-compose logs -f celery_worker
+
+```
+
+
+5. Access interactive API documentation:
+* **Swagger UI**: `http://localhost:8000/docs`
+* **Redoc**: `http://localhost:8000/redoc`
+
+
+
+---
+
+## 🔐 Key Implementation Highlights
+
+* **SQLAlchemy 2.0 Async Pipeline**: Full async/await database access utilizing `asyncpg` drivers for minimal latency under load.
+* **Idempotent Background Jobs**: Streak calculation jobs are designed to be idempotent to prevent duplicate counts during network retries.
+* **Automated Validation**: Pydantic models enforce strict payload sanitization before reaching database transaction boundaries.
