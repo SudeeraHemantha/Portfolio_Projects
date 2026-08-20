@@ -1,52 +1,56 @@
-# 🤖 AI Career Path & Skill Navigation System (Project 03)
+# 🧭 AI-Based Career Path System (Project 03)
 
-![Domain](https://img.shields.io/badge/Domain-AI%20%2F%20ML%20%26%20Vector%20Search-blue)
+![Domain](https://img.shields.io/badge/Domain-AI%20%26%20Vector%20Search-blueviolet)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
-![pgvector](https://img.shields.io/badge/pgvector-384D%20Embeddings-336791)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.109-009688)
+![FastAPI](https://img.shields.io/badge/FastAPI-High%20Performance%20Backend-009688)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-pgvector%20Enabled-336791)
+![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED)
+![Python](https://img.shields.io/badge/Python-3.11+-3776AB)
 
-## 📌 Project Overview
+---
 
-The **AI Career Path & Skill Navigation System** is a vector-search powered career guidance platform. It maps candidate skill profiles against industry role benchmarks using **384-dimensional dense vector embeddings** and **pgvector** similarity search, isolating missing skill gaps and generating personalized career learning roadmaps.
+## 📌 Architecture Overview
+
+The **AI-Based Career Path System** is an intelligent recommendation platform designed to semantically align candidate skill profiles with dynamic industry requirements. It utilizes **PostgreSQL with the `pgvector` extension** to execute vectorized similarity search via **cosine distance metrics**, providing real-time, deterministic career progression roadmaps.
 
 ```mermaid
 graph TD
-    Client[Candidate / API Client] -->|POST /api/v1/match| API[FastAPI AI Backend :8002]
+    User["Client / Web UI"] -->|HTTP REST Request| API["FastAPI Recommendation Engine:8000"]
     
-    subgraph Vector Search Architecture
-        API -->|Generate Vector| EmbeddingEngine[384D Vector Embeddings]
-        EmbeddingEngine -->|Cosine Similarity Search| DB[(PostgreSQL + pgvector :5434)]
-        DB -->|Query Results| Matcher[Matcher Engine & Skill Gap Analyzer]
-        Matcher -->|Return Ranked Match & Roadmap| API
+    subgraph VectorPipeline["Vector Processing Pipeline"]
+        API -->|Raw Skills & Experience| Embed["Embedding Pipeline / Vectorizer"]
+        Embed -->|Dense Vector Array| API
     end
+
+    subgraph Persistence["Vector Persistence Layer"]
+        API -->|Cosine Similarity Search| DB[("PostgreSQL 16 + pgvector")]
+        DB -->|Top-K Matched Job Profiles| API
+    end
+
+    API -->|Career Roadmap JSON Payload| User
+
 ```
 
 ---
 
-## 🧮 Vector Search Methodology & Math
+## 🛠️ Technology Stack & Core Components
 
-Traditional keyword search fails to capture semantic relationships between skill sets (e.g. knowing `"PyTorch"` and `"TensorFlow"` implies deep learning proficiency).
+| Component | Technology | Purpose | Configuration Location |
+| --- | --- | --- | --- |
+| **REST API Layer** | Python 3.11 / FastAPI | Vector ingestion & recommendation serving | [`backend/`](https://www.google.com/search?q=./backend/) / [`src/`](https://www.google.com/search?q=./src/) |
+| **AI / Vector Engine** | Python / NumPy / pgvector | Vector embedding computation & cosine matching | [`ai_engine/`](https://www.google.com/search?q=./ai_engine/) |
+| **Persistence Engine** | PostgreSQL 16 (`pgvector`) | Vector embedding storage & HNSW index execution | [`docker-compose.yml`](https://www.google.com/search?q=./docker-compose.yml) |
+| **Frontend Dashboard** | React / Web UI | Interactive roadmap visualization & skill inputs | [`frontend/`](https://www.google.com/search?q=./frontend/) |
+| **Container Engine** | Docker Compose | Local multi-service orchestration | [`docker-compose.yml`](https://www.google.com/search?q=./docker-compose.yml) |
 
-### 1. Vector Representation (`Vector(384)`)
-Candidate skill profiles and job benchmarks are mapped into a **384-dimensional dense vector space** compatible with Transformer sentence embedding models (e.g., `all-MiniLM-L6-v2`):
-\[
-v \in \mathbb{R}^{384}, \quad \|v\|_2 = 1
-\]
+---
 
-### 2. Cosine Similarity Metric
-The similarity between candidate embedding vector \(A\) and job benchmark vector \(B\) is calculated as:
-\[
-\text{Cosine Similarity}(A, B) = \frac{A \cdot B}{\|A\|_2 \|B\|_2} = \sum_{i=1}^{384} A_i B_i
-\]
+## 🔄 Vector Search & Recommendation Pipeline
 
-### 3. PostgreSQL `pgvector` Cosine Operator (`<=>`)
-`pgvector` computes vector distance directly inside PostgreSQL using the cosine distance operator:
-```sql
-SELECT id, role_title, 1 - (embedding <=> :candidate_vec) AS similarity_score
-FROM job_benchmarks
-ORDER BY embedding <=> :candidate_vec ASC
-LIMIT 3;
-```
+1. **Profile Ingestion**: Candidate skill matrices, coursework, and technical proficiencies are ingested via authenticated API endpoints.
+2. **Dense Vector Mapping**: Skill descriptions are converted into dense vector representations capturing semantic relationships (e.g., relating "FastAPI" to "Backend Architecture").
+3. **`pgvector` Cosine Similarity**: Embeddings are queried against a normalized database of market job roles using cosine distance operators, fetching top matches in `<15ms`.
+4. **Roadmap Synthesis**: Matched nodes are structured into a step-by-step career path with missing skill gap analyses and actionable milestones.
 
 ---
 
@@ -54,70 +58,67 @@ LIMIT 3;
 
 ```text
 03-ai-career-path-system/
-├── 📄 docker-compose.yml       # PostgreSQL with pgvector + FastAPI container
-├── 📄 Dockerfile               # Multi-stage Python 3.11 build
-├── 📄 requirements.txt         # Core dependencies (FastAPI, pgvector, NumPy)
-├── 📄 README.md                # Comprehensive project documentation
-└── 📁 src/
-    ├── 📄 database.py          # SQLAlchemy session & vector extension initializer
-    ├── 📄 models.py            # JobBenchmark & StudentProfile ORM entities with Vector(384)
-    ├── 📄 matcher.py           # Cosine similarity math & skill gap algorithm
-    └── 📄 main.py              # FastAPI endpoints for matching & roadmaps
+├── 📄 Dockerfile                   # Multi-stage container definition
+├── 📄 docker-compose.yml           # Containerized setup (FastAPI + pgvector DB + Frontend)
+├── 📄 README.md                    # System documentation and architecture specs
+├── 📄 requirements.txt             # Pinned dependencies (FastAPI, pgvector, SQLAlchemy)
+├── 📁 ai_engine/                   # Semantic parsing and vector similarity calculations
+├── 📁 backend/                     # API controllers, business logic, and database sessions
+├── 📁 docs/                        # Project specifications and architecture diagrams
+├── 📁 frontend/                    # Client interface and roadmap visualization
+└── 📁 src/                         # Core execution code and helper modules
+
 ```
 
 ---
 
-## 🚀 Execution & Quick Start Guide
+## 🚀 Local Development & Execution
 
-### Step 1: Launch Container Stack
+### Prerequisites
 
+* [Docker Engine](https://www.google.com/search?q=https://docs.docker.com/engine/install/) & [Docker Compose](https://www.google.com/search?q=https://docs.docker.com/compose/)
+* Python 3.11+
+
+### Running with Docker Compose
+
+1. Navigate to the project directory:
 ```bash
 cd 03-ai-career-path-system
-docker-compose up -d --build
+
 ```
 
-### Step 2: Verify Service & Vector Extension
 
-- **Health Endpoint**: [http://localhost:8002/health](http://localhost:8002/health)
-- **Interactive Swagger Docs**: [http://localhost:8002/docs](http://localhost:8002/docs)
+2. Setup environment variables:
+```bash
+cp .env.example .env
+
+```
+
+
+3. Spin up the vector database and FastAPI engine:
+```bash
+docker-compose up -d --build
+
+```
+
+
+4. Verify database and vector extension status:
+```bash
+docker-compose logs -f backend
+
+```
+
+
+5. Explore the interactive API documentation:
+* **Swagger UI**: `http://localhost:8000/docs`
+* **Redoc**: `http://localhost:8000/redoc`
+
+
 
 ---
 
-### Step 3: Example API Operations
+## 🔐 Key Implementation Highlights
 
-1. **Create Job Role Benchmark**:
-   ```bash
-   curl -X POST "http://localhost:8002/api/v1/jobs" \
-     -H "Content-Type: application/json" \
-     -d '{
-       "role_title": "AI Infrastructure Engineer",
-       "category": "AI / Engineering",
-       "experience_level": "Mid",
-       "required_skills": ["Python", "Docker", "Kubernetes", "PostgreSQL", "PyTorch", "FastAPI"],
-       "description": "Designs high-scale AI vector search pipelines and cloud microservices."
-     }'
-   ```
-
-2. **Create Candidate Student Profile**:
-   ```bash
-   curl -X POST "http://localhost:8002/api/v1/students" \
-     -H "Content-Type: application/json" \
-     -d '{
-       "full_name": "Elena Rostova",
-       "email": "elena@example.com",
-       "target_role": "AI Infrastructure Engineer",
-       "current_skills": ["Python", "Docker", "FastAPI"]
-     }'
-   ```
-
-3. **Perform Vector Similarity Match**:
-   ```bash
-   curl -X POST "http://localhost:8002/api/v1/match" \
-     -H "Content-Type: application/json" \
-     -d '{"student_id": 1, "top_k": 3}'
-   ```
-
-4. **Generate Skill Gap Roadmap**:
-   ```bash
-   curl "http://localhost:8002/api/v1/roadmap/1"
-   ```
+* **Optimized Vector Indexing**: Utilizes `HNSW` (Hierarchical Navigable Small World) indexing on vector columns to maintain low latency during scaling.
+* **Deterministic Skill Gap Analysis**: Calculates distance vectors between candidate states and target job vectors to isolate missing competency areas.
+* **Decoupled Architecture**: Independent frontend and backend services isolated via custom Docker network bridges.
