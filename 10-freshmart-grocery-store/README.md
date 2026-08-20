@@ -1,62 +1,55 @@
-# 🛒 FreshMart E-Commerce & Grocery Delivery Platform (Project 10)
+# 🛒 FreshMart E-Commerce & Grocery Management (Project 10)
 
-![Domain](https://img.shields.io/badge/Domain-Full--Stack%20E--Commerce-blue)
+![Domain](https://img.shields.io/badge/Domain-Full--Stack%20E--Commerce-brightgreen)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
-![MongoDB](https://img.shields.io/badge/MongoDB-7.0-47A248)
-![Express](https://img.shields.io/badge/Express.js-4.18-000000)
-![React](https://img.shields.io/badge/React-18.2-61DAFB)
+![Frontend](https://img.shields.io/badge/Frontend-Responsive%20Web%20UI-blue)
+![Backend](https://img.shields.io/badge/Backend-Node.js%20%2F%20Express.js-339933)
+![Database](https://img.shields.io/badge/Database-MongoDB%20(Document%20Store)-47A248)
+![Docker](https://img.shields.io/badge/Docker-Compose%20Orchestrated-2496ED)
+
+---
 
 ## 📌 Architecture Overview
 
-The **FreshMart E-Commerce & Grocery Delivery Platform** is a full-stack document-oriented online supermarket platform. Built with **React**, **Express.js**, **Mongoose ODM**, and **MongoDB**, it provides product category navigation, real-time cart subtotal/tax calculation, checkout order placement, and inventory tracking.
+**FreshMart** is a full-stack e-commerce and grocery catalog engine. It leverages **MongoDB** document schemas to accommodate diverse product variations, categories, and dynamic stock levels. The system features a responsive frontend with client-side shopping cart state management, a decoupled **Node.js/Express REST API**, and a containerized deployment setup orchestrated via **Docker Compose**.
 
 ```mermaid
 graph TD
-    Client[React Grocery Storefront :3010] -->|REST API Requests| API[Express Backend API :5010]
-    API -->|Mongoose ODM Queries| DB[(MongoDB Document Database :27017)]
+    Client["Client Web App (Catalog & Cart UI)"] -->|HTTP / JSON REST| API["Express API Service:5000"]
     
-    subgraph MongoDB Document Store
-        DB --> ProductsCollection[products Collection]
-        DB --> OrdersCollection[orders Collection]
+    subgraph Service_Logic["Backend Business Logic"]
+        API -->|Product Search & Filters| Catalog["Catalog & Category Manager"]
+        API -->|Cart & State Sync| CartService["Cart & Pricing Engine"]
+        API -->|Checkout & Inventory Allocation| OrderEngine["Order Processing Service"]
     end
 
-    API -->|Auto-Seed Catalog| ProductsCollection
+    subgraph Data_Persistence["Document Persistence Layer"]
+        Catalog -->|Read / Write Documents| MongoDB[("MongoDB Cluster (freshmart_db)")]
+        OrderEngine -->|Atomic Document Writes| MongoDB
+    end
+
 ```
 
 ---
 
-## 🍃 Document-Oriented Data Model (MongoDB)
+## 🛠️ Technology Stack & Core Components
 
-1. **`products` Collection**:
-   ```json
-   {
-     "_id": "65cf10a2f...",
-     "name": "Organic Honeycrisp Apples",
-     "category": "Fresh Produce",
-     "price": 2.99,
-     "unit": "lb",
-     "stock": 100,
-     "isOrganic": true,
-     "description": "Crisp and sweet organic apples sourced from local orchards."
-   }
-   ```
+| Component | Technology | Purpose | Implementation Detail |
+| --- | --- | --- | --- |
+| **Client UI** | JavaScript (ES6+) / HTML5 / CSS3 | Interactive product catalog & shopping cart | LocalStorage persistence & dynamic DOM updates |
+| **REST API Layer** | Node.js / Express.js | Product filtering, cart calculation, order creation | Decoupled routing with JSON payload validation |
+| **Document Database** | MongoDB 7 / Mongoose | Flexible product variations & nested order documents | Indexed search queries & schema validation |
+| **Container Engine** | Docker Compose | Local multi-service orchestration | Unified network bridging API and database |
+| **State Management** | Client State & REST Synchronization | Real-time cart calculation and price checks | Server-side total recalculation to prevent tampering |
 
-2. **`orders` Collection**:
-   ```json
-   {
-     "_id": "65cf11b4f...",
-     "customerName": "Alex Mercer",
-     "email": "alex@example.com",
-     "deliveryAddress": "742 Evergreen Terrace",
-     "items": [
-       { "productId": "65cf10a2f...", "name": "Organic Honeycrisp Apples", "price": 2.99, "quantity": 3 }
-     ],
-     "subtotal": 8.97,
-     "deliveryFee": 3.99,
-     "total": 12.96,
-     "status": "Processing"
-   }
-   ```
+---
+
+## 🔄 Dynamic Document Model & Order Workflow
+
+1. **Flexible Product Schemas**: MongoDB document storage supports varying grocery attributes (e.g., weights, perishable flags, dietary tags, units) without requiring schema migrations.
+2. **Client-Side Cart Persistence**: Shopping cart items, counts, and active discounts persist across page reloads using browser local storage.
+3. **Server-Side Price Validation**: During checkout, the backend recalculates unit prices and totals against the active database records to prevent client-side price manipulation.
+4. **Atomic Order Logging**: Orders are persisted as nested JSON documents capturing a permanent snapshot of item prices, customer metadata, and transaction timestamps.
 
 ---
 
@@ -64,64 +57,60 @@ graph TD
 
 ```text
 10-freshmart-grocery-store/
-├── 📄 docker-compose.yml           # MongoDB + Express API + React Storefront stack
-├── 📄 README.md                    # Comprehensive e-commerce documentation
-├── 📁 backend/
-│   ├── 📄 Dockerfile               # Node.js 18-alpine backend container
-│   ├── 📄 package.json             # Express, mongoose, cors dependencies
-│   └── 📁 src/
-│       ├── 📄 server.js            # Express server & MongoDB initialization
-│       └── 📁 models/
-│           ├── 📄 Product.js       # Product catalog Mongoose schema
-│           └── 📄 Order.js         # Order transaction Mongoose schema
-└── 📁 frontend/
-    ├── 📄 Dockerfile               # React build + Nginx static asset server
-    ├── 📄 package.json             # React 18 & Vite dependencies
-    ├── 📄 index.html               # Vite HTML entry point
-    └── 📁 src/
-        └── 📄 App.jsx              # Category Filter, Search Bar & Cart UI
+├── 📄 docker-compose.yml           # Multi-container orchestration (App + MongoDB)
+├── 📄 README.md                    # System architecture & setup documentation
+├── 📄 package.json                 # Project dependencies and script configurations
+├── 📁 public/                      # Static assets, styles, and client-side scripts
+│   ├── 📁 css/
+│   ├── 📁 js/                      # Cart state management and DOM renderers
+│   └── 📄 index.html
+├── 📁 src/                         # Server source code
+│   ├── 📄 app.js                   # Express application setup and middleware
+│   ├── 📄 server.js                # Server entry point and database connection
+│   ├── 📁 config/                  # MongoDB URI and environment configurations
+│   ├── 📁 controllers/             # Product, cart, and order business logic
+│   ├── 📁 models/                  # Mongoose document schemas (Product, Order, User)
+│   └── 📁 routes/                  # API endpoint definitions (/api/products, /api/orders)
+└── 📁 data/                        # Seed datasets for product catalogs
+    └── 📄 seed_products.json
+
 ```
 
 ---
 
-## 🚀 Execution & Quick Start Guide
+## 🚀 Setup & Execution
 
-### Step 1: Launch Full Stack via Docker Compose
+### Prerequisites
 
+* [Docker Engine](https://docs.docker.com/engine/install/) & [Docker Compose](https://docs.docker.com/compose/)
+* Node.js 18+ and npm (for local non-containerized execution)
+
+### Running with Docker Compose
+
+1. Navigate to the project directory:
 ```bash
 cd 10-freshmart-grocery-store
-docker-compose up -d --build
+
 ```
 
-### Step 2: Access Applications
 
-- **React Grocery Storefront**: [http://localhost:3010](http://localhost:3010)
-- **Express Backend API Health**: [http://localhost:5010/health](http://localhost:5010/health)
+2. Spin up the application and MongoDB instance:
+```bash
+docker-compose up -d --build
+
+```
+
+
+3. Access the application:
+* **Web Application & Storefront**: `http://localhost:5000`
+* **API Endpoints**: `http://localhost:5000/api/products`
+
+
 
 ---
 
-### Step 3: Example REST API Operations
+## 🔐 Key Implementation Highlights
 
-1. **Query Product Catalog**:
-   ```bash
-   curl "http://localhost:5010/api/v1/products?category=Fresh%20Produce"
-   ```
-
-2. **Submit Grocery Checkout Order**:
-   ```bash
-   curl -X POST "http://localhost:5010/api/v1/orders" \
-     -H "Content-Type: application/json" \
-     -d '{
-       "customerName": "Elena Rostova",
-       "email": "elena@example.com",
-       "deliveryAddress": "100 Innovation Way, Suite 400",
-       "items": [
-         { "productId": "p1", "name": "Organic Honeycrisp Apples", "price": 2.99, "quantity": 2 }
-       ]
-     }'
-   ```
-
-3. **Query Active Customer Orders**:
-   ```bash
-   curl http://localhost:5010/api/v1/orders
-   ```
+* **Flexible Schema Architecture**: Mongoose schemas support dynamic product attributes and nested order line items without performance degradation.
+* **Server-Side Price Integrity**: Independent price and discount verification prevents unauthorized checkout payload modifications.
+* **Containerized Parity**: Single-command startup via `docker-compose up` provisions the database, applies seeds, and serves the application.
