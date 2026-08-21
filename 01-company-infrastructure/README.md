@@ -8,6 +8,15 @@
 
 ---
 
+### Showcase
+
+
+https://github.com/user-attachments/assets/98c6d08b-603e-4920-b3b9-da2ef68a9a89
+
+
+
+
+
 ## 📌 Architecture Overview
 
 The **Enterprise Company Infrastructure** project provides a production-grade, highly available, and containerized infrastructure foundation. It orchestrates state persistence, high-speed in-memory caching/messaging, and microservice business logic using **Docker Compose** for local deployment and **Kubernetes** for enterprise cloud orchestration.
